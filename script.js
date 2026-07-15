@@ -1,13 +1,13 @@
-const space =
-document.querySelector(".space");
+const universe =
+document.querySelector(".universe");
 
 
 const planet =
 document.querySelector(".planet");
 
 
-const mission =
-document.getElementById("mission");
+const letters =
+document.getElementById("letters");
 
 
 const final =
@@ -17,20 +17,18 @@ document.querySelector(".final");
 
 
 
-// ساخت ستاره ها
+// ستاره ها
 
 
-for(let i=0;i<200;i++){
+for(let i=0;i<250;i++){
 
 
 let s=document.createElement("div");
 
-
 s.className="star";
 
 
-let size=
-Math.random()*3+1;
+let size=Math.random()*3+1;
 
 
 s.style.width=size+"px";
@@ -38,21 +36,12 @@ s.style.width=size+"px";
 s.style.height=size+"px";
 
 
-s.style.left=
-Math.random()*100+"vw";
+s.style.left=Math.random()*100+"%";
+
+s.style.top=Math.random()*100+"%";
 
 
-s.style.top=
-Math.random()*100+"vh";
-
-
-s.style.animationDelay=
-Math.random()*3+"s";
-
-
-
-document
-.querySelector(".stars")
+document.querySelector(".stars")
 .appendChild(s);
 
 
@@ -62,59 +51,69 @@ document
 
 
 
-// صدا سازی
+
+// موسیقی فضایی با کد
 
 
-const audio =
+const ctx=
 new AudioContext();
 
 
 
-function sound(freq,duration,type="sine"){
+function tone(freq,time){
 
 
-let osc=
-audio.createOscillator();
+let o=ctx.createOscillator();
+
+let g=ctx.createGain();
 
 
-let gain=
-audio.createGain();
+o.type="sine";
+
+o.frequency.value=freq;
 
 
-osc.type=type;
-
-osc.frequency.value=freq;
+g.gain.value=.05;
 
 
-gain.gain.value=.15;
+o.connect(g);
+
+g.connect(ctx.destination);
 
 
-osc.connect(gain);
-
-gain.connect(audio.destination);
+o.start();
 
 
-osc.start();
-
-
-gain.gain.exponentialRampToValueAtTime(
-0.001,
-audio.currentTime+duration
+o.stop(
+ctx.currentTime+time
 );
-
-
-osc.stop(
-audio.currentTime+duration
-);
-
 
 }
 
 
 
+function spaceMusic(){
 
 
-let starsFound=0;
+let notes=[220,277,330,440];
+
+
+notes.forEach((n,i)=>{
+
+
+setTimeout(()=>{
+
+tone(n,3);
+
+},i*700);
+
+
+});
+
+
+}
+
+
 
 
 
@@ -123,26 +122,27 @@ let starsFound=0;
 planet.onclick=()=>{
 
 
-audio.resume();
+ctx.resume();
 
 
-sound(120,2,"sawtooth");
+spaceMusic();
 
 
-space.classList.add("travel");
+universe.classList.add("active");
 
 
 
 setTimeout(()=>{
 
 
-space.classList.add("play");
+universe.classList.add("zoom");
 
 
-createHiddenStars();
+showName();
 
 
-},4000);
+
+},5000);
 
 
 
@@ -154,132 +154,53 @@ createHiddenStars();
 
 
 
-function createHiddenStars(){
+function showName(){
 
 
-for(let i=0;i<3;i++){
+let word="ARSHIA";
 
 
-let s=document.createElement("div");
+letters.innerHTML="";
 
 
-s.className="star";
+word.split("")
+.forEach((c,i)=>{
 
 
-s.style.width="15px";
-
-s.style.height="15px";
+setTimeout(()=>{
 
 
-s.style.left=
-20+Math.random()*60+"%";
+let span=document.createElement("span");
+
+span.innerHTML=c+" ";
+
+letters.appendChild(span);
 
 
-s.style.top=
-30+Math.random()*40+"%";
-
-
-s.style.boxShadow=
-"0 0 30px cyan";
-
-
-s.onclick=()=>{
-
-
-sound(
-600+i*100,
-.5,
-"triangle"
-);
+tone(400+i*80,.5);
 
 
 
-s.remove();
-
-
-starsFound++;
+},i*500);
 
 
 
-if(starsFound==3){
-
-finish();
-
-}
-
-
-};
-
-
-
-space.appendChild(s);
-
-
-}
-
-}
-
-
-
-
-
-function finish(){
-
-
-sound(900,3,"sine");
-
-
-mission.style.opacity=0;
+});
 
 
 
 setTimeout(()=>{
+
+
+letters.style.opacity=0;
 
 
 final.classList.add("show");
 
 
-},2000);
+
+},5000);
 
 
 
 }
-
-
-
-
-
-// شهاب سنگ
-
-
-setInterval(()=>{
-
-
-let sh=document.createElement("div");
-
-
-sh.className="shooting";
-
-
-sh.style.top=
-Math.random()*70+"%";
-
-
-sh.style.left=
-Math.random()*50+"%";
-
-
-document
-.querySelector(".shooting-stars")
-.appendChild(sh);
-
-
-
-setTimeout(()=>{
-
-sh.remove();
-
-},1000);
-
-
-},3000);
