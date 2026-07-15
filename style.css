@@ -12,8 +12,7 @@ overflow:hidden;
 background:black;
 
 font-family:
-Segoe UI,
-sans-serif;
+Segoe UI;
 
 color:white;
 
@@ -21,23 +20,33 @@ color:white;
 
 
 
-.space{
-
-width:100vw;
+.universe{
 
 height:100vh;
 
-position:relative;
+width:100vw;
 
 background:
 
 radial-gradient(
 circle,
-#16204d,
-#000 70%
+#17245b,
+black 70%
 );
 
+position:relative;
+
 overflow:hidden;
+
+transition:5s;
+
+}
+
+
+
+.universe.zoom{
+
+transform:scale(2);
 
 }
 
@@ -55,8 +64,6 @@ inset:0;
 
 
 
-
-
 .star{
 
 position:absolute;
@@ -66,23 +73,110 @@ background:white;
 border-radius:50%;
 
 animation:
-twinkle 3s infinite alternate;
+pulse 3s infinite alternate;
 
 }
 
 
 
-@keyframes twinkle{
+@keyframes pulse{
 
 from{
-opacity:.2;
+
+opacity:.3;
+
 }
 
 to{
+
 opacity:1;
+
 }
 
 }
+
+
+
+
+.nebula{
+
+position:absolute;
+
+width:800px;
+
+height:800px;
+
+left:50%;
+
+top:50%;
+
+
+transform:
+
+translate(-50%,-50%)
+scale(0);
+
+
+border-radius:50%;
+
+
+background:
+
+conic-gradient(
+
+#00ffff,
+
+transparent,
+
+#9b5cff,
+
+transparent
+
+);
+
+
+filter:blur(40px);
+
+
+transition:
+
+5s;
+
+
+}
+
+
+
+.universe.active .nebula{
+
+
+transform:
+
+translate(-50%,-50%)
+scale(1);
+
+
+animation:
+
+rotate 30s linear infinite;
+
+}
+
+
+
+@keyframes rotate{
+
+to{
+
+transform:
+translate(-50%,-50%)
+scale(1)
+rotate(360deg);
+
+}
+
+}
+
 
 
 
@@ -91,15 +185,11 @@ opacity:1;
 
 position:absolute;
 
-top:18%;
+top:20%;
 
 width:100%;
 
 text-align:center;
-
-z-index:5;
-
-transition:2s;
 
 }
 
@@ -115,9 +205,8 @@ font-weight:300;
 
 
 
-
-
 .planet{
+
 
 position:absolute;
 
@@ -126,13 +215,14 @@ left:50%;
 top:55%;
 
 
+width:180px;
+
+height:180px;
+
+
 transform:
+
 translate(-50%,-50%);
-
-
-width:170px;
-
-height:170px;
 
 
 border-radius:50%;
@@ -142,11 +232,10 @@ background:
 
 radial-gradient(
 circle at 30% 30%,
-#9ff,
-#3150bd 45%,
-#05052a
+#fff,
+#2870c9,
+#050522
 );
-
 
 
 box-shadow:
@@ -160,96 +249,6 @@ cursor:pointer;
 
 transition:4s;
 
-}
-
-
-
-
-
-.ring{
-
-position:absolute;
-
-width:280px;
-
-height:70px;
-
-
-border:
-
-3px solid rgba(255,255,255,.5);
-
-
-border-radius:50%;
-
-
-left:-55px;
-
-top:50px;
-
-
-transform:
-rotate(-20deg);
-
-}
-
-
-
-
-.galaxy{
-
-
-position:absolute;
-
-
-left:50%;
-
-top:50%;
-
-
-width:700px;
-
-height:700px;
-
-
-border-radius:50%;
-
-
-background:
-
-conic-gradient(
-transparent,
-#7c4dff,
-transparent,
-#00eaff,
-transparent
-);
-
-
-filter:
-blur(25px);
-
-
-transform:
-
-translate(-50%,-50%)
-scale(0);
-
-
-transition:
-
-5s;
-
-}
-
-
-
-.space.travel .galaxy{
-
-transform:
-
-translate(-50%,-50%)
-scale(1);
 
 }
 
@@ -257,7 +256,7 @@ scale(1);
 
 
 
-.space.travel .planet{
+.universe.active .planet{
 
 opacity:0;
 
@@ -271,47 +270,62 @@ scale(.1);
 
 
 
-.space.travel .intro{
 
-opacity:0;
-
-}
-
-
-
-
-
-#mission{
-
+.ring{
 
 position:absolute;
 
+width:300px;
 
-top:80%;
+height:80px;
 
-width:100%;
+border:
 
-
-text-align:center;
-
-
-font-size:25px;
+4px solid white;
 
 
-opacity:0;
+border-radius:50%;
 
 
-transition:2s;
+top:50px;
 
+left:-60px;
+
+transform:
+
+rotate(-20deg);
 
 }
 
 
 
 
-.space.play #mission{
 
-opacity:1;
+#letters{
+
+position:absolute;
+
+left:50%;
+
+top:50%;
+
+transform:
+
+translate(-50%,-50%);
+
+
+font-size:120px;
+
+letter-spacing:40px;
+
+
+color:white;
+
+
+text-shadow:
+
+0 0 40px cyan;
+
 
 }
 
@@ -324,7 +338,6 @@ opacity:1;
 
 position:absolute;
 
-
 left:50%;
 
 top:50%;
@@ -333,7 +346,7 @@ top:50%;
 transform:
 
 translate(-50%,-50%)
-scale(.2);
+scale(.1);
 
 
 opacity:0;
@@ -342,13 +355,12 @@ opacity:0;
 text-align:center;
 
 
-transition:4s;
+transition:
 
+5s;
 
-z-index:20;
 
 }
-
 
 
 
@@ -368,72 +380,36 @@ scale(1);
 
 
 
-
-
 .final h2{
 
-
-font-size:75px;
-
+font-size:70px;
 
 text-shadow:
 
-0 0 30px cyan,
-0 0 70px white;
-
+0 0 30px cyan;
 
 }
 
 
+.final h3{
 
+font-size:100px;
 
+margin:0;
 
-.shooting{
+color:#fff;
 
+text-shadow:
 
-position:absolute;
-
-width:100px;
-
-height:2px;
-
-background:white;
-
-animation:
-
-shoot 1s linear;
-
+0 0 50px white;
 
 }
-
-
-@keyframes shoot{
-
-
-from{
-
-transform:translateX(0);
-
-opacity:1;
-
-}
-
-
-to{
-
-transform:translateX(500px);
-
-opacity:0;
-
-}
-
-}
-
 
 
 
 
 @media(max-width:600px){
+
 
 .intro h1{
 
@@ -445,6 +421,13 @@ font-size:25px;
 .final h2{
 
 font-size:35px;
+
+}
+
+
+.final h3{
+
+font-size:55px;
 
 }
 
