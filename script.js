@@ -6,25 +6,143 @@ const planet =
 document.querySelector(".planet");
 
 
+const mission =
+document.getElementById("mission");
+
+
 const final =
 document.querySelector(".final");
+
+
+
+
+
+// ساخت ستاره ها
+
+
+for(let i=0;i<200;i++){
+
+
+let s=document.createElement("div");
+
+
+s.className="star";
+
+
+let size=
+Math.random()*3+1;
+
+
+s.style.width=size+"px";
+
+s.style.height=size+"px";
+
+
+s.style.left=
+Math.random()*100+"vw";
+
+
+s.style.top=
+Math.random()*100+"vh";
+
+
+s.style.animationDelay=
+Math.random()*3+"s";
+
+
+
+document
+.querySelector(".stars")
+.appendChild(s);
+
+
+}
+
+
+
+
+
+// صدا سازی
+
+
+const audio =
+new AudioContext();
+
+
+
+function sound(freq,duration,type="sine"){
+
+
+let osc=
+audio.createOscillator();
+
+
+let gain=
+audio.createGain();
+
+
+osc.type=type;
+
+osc.frequency.value=freq;
+
+
+gain.gain.value=.15;
+
+
+osc.connect(gain);
+
+gain.connect(audio.destination);
+
+
+osc.start();
+
+
+gain.gain.exponentialRampToValueAtTime(
+0.001,
+audio.currentTime+duration
+);
+
+
+osc.stop(
+audio.currentTime+duration
+);
+
+
+}
+
+
+
+
+
+let starsFound=0;
+
+
 
 
 
 planet.onclick=()=>{
 
 
-space.classList.add("active");
+audio.resume();
+
+
+sound(120,2,"sawtooth");
+
+
+space.classList.add("travel");
 
 
 
 setTimeout(()=>{
 
 
-final.classList.add("show");
+space.classList.add("play");
 
 
-},5000);
+createHiddenStars();
+
+
+},4000);
 
 
 
@@ -34,41 +152,134 @@ final.classList.add("show");
 
 
 
-// ساخت ستاره های متحرک
-
-for(let i=0;i<150;i++){
 
 
-let star=document.createElement("div");
+function createHiddenStars(){
 
 
-star.style.position="absolute";
-
-star.style.width="2px";
-
-star.style.height="2px";
-
-star.style.background="white";
-
-star.style.borderRadius="50%";
+for(let i=0;i<3;i++){
 
 
-star.style.left=
-Math.random()*100+"vw";
+let s=document.createElement("div");
 
 
-star.style.top=
-Math.random()*100+"vh";
+s.className="star";
 
 
-star.style.opacity=
-Math.random();
+s.style.width="15px";
+
+s.style.height="15px";
+
+
+s.style.left=
+20+Math.random()*60+"%";
+
+
+s.style.top=
+30+Math.random()*40+"%";
+
+
+s.style.boxShadow=
+"0 0 30px cyan";
+
+
+s.onclick=()=>{
+
+
+sound(
+600+i*100,
+.5,
+"triangle"
+);
 
 
 
-document
-.querySelector(".stars")
-.appendChild(star);
+s.remove();
+
+
+starsFound++;
+
+
+
+if(starsFound==3){
+
+finish();
+
+}
+
+
+};
+
+
+
+space.appendChild(s);
 
 
 }
+
+}
+
+
+
+
+
+function finish(){
+
+
+sound(900,3,"sine");
+
+
+mission.style.opacity=0;
+
+
+
+setTimeout(()=>{
+
+
+final.classList.add("show");
+
+
+},2000);
+
+
+
+}
+
+
+
+
+
+// شهاب سنگ
+
+
+setInterval(()=>{
+
+
+let sh=document.createElement("div");
+
+
+sh.className="shooting";
+
+
+sh.style.top=
+Math.random()*70+"%";
+
+
+sh.style.left=
+Math.random()*50+"%";
+
+
+document
+.querySelector(".shooting-stars")
+.appendChild(sh);
+
+
+
+setTimeout(()=>{
+
+sh.remove();
+
+},1000);
+
+
+},3000);
