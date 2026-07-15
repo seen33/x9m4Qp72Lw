@@ -27,26 +27,26 @@ width:100vw;
 
 height:100vh;
 
-position:relative;
-
-overflow:hidden;
-
-
 background:
 
 radial-gradient(
-circle at center,
-#17275a,
-#02030b 70%
+circle,
+#111b40,
+#000 70%
 );
 
+position:relative;
+
+overflow:hidden;
 
 }
 
 
 
 
+
 /* ستاره ها */
+
 
 .stars{
 
@@ -54,118 +54,45 @@ position:absolute;
 
 inset:0;
 
-}
+
+background-image:
+
+radial-gradient(
+white 1px,
+transparent 1px
+);
 
 
-.star{
+background-size:
 
-position:absolute;
+50px 50px;
 
-background:white;
-
-border-radius:50%;
 
 animation:
 
-twinkle 3s infinite alternate;
+moveStars 20s linear infinite;
+
 
 }
 
 
 
-@keyframes twinkle{
+@keyframes moveStars{
 
 
 from{
 
-opacity:.2;
+transform:translateY(0);
 
 }
 
 
 to{
 
-opacity:1;
+transform:translateY(100px);
 
 }
 
-}
-
-
-
-
-
-/* کهکشان پشت */
-
-.galaxy{
-
-
-position:absolute;
-
-
-width:650px;
-
-height:650px;
-
-
-left:50%;
-
-top:50%;
-
-
-transform:
-
-translate(-50%,-50%);
-
-
-border-radius:50%;
-
-
-background:
-
-conic-gradient(
-
-transparent,
-
-rgba(0,200,255,.5),
-
-transparent,
-
-rgba(140,80,255,.5),
-
-transparent
-
-);
-
-
-filter:
-
-blur(35px);
-
-
-opacity:.4;
-
-
-animation:
-
-rotate 40s linear infinite;
-
-
-}
-
-
-
-@keyframes rotate{
-
-
-to{
-
-transform:
-
-translate(-50%,-50%)
-rotate(360deg);
-
-}
 
 }
 
@@ -173,22 +100,17 @@ rotate(360deg);
 
 
 
-/* متن شروع */
+
 
 .intro{
 
-
 position:absolute;
 
-
-top:18%;
-
+top:20%;
 
 width:100%;
 
-
 text-align:center;
-
 
 z-index:5;
 
@@ -196,14 +118,11 @@ z-index:5;
 }
 
 
-
 .intro h1{
-
 
 font-size:45px;
 
 font-weight:300;
-
 
 }
 
@@ -239,16 +158,13 @@ translate(-50%,-50%);
 
 
 
-width:190px;
+width:180px;
 
-height:190px;
+height:180px;
 
 
 
 border-radius:50%;
-
-
-cursor:pointer;
 
 
 
@@ -256,15 +172,10 @@ background:
 
 
 radial-gradient(
-
 circle at 30% 30%,
-
-#dff,
-
-#3474d4 40%,
-
-#05052a 80%
-
+#9ee7ff,
+#2946a3 40%,
+#080b35 80%
 );
 
 
@@ -272,15 +183,21 @@ circle at 30% 30%,
 box-shadow:
 
 
-0 0 50px cyan,
+0 0 40px #3abfff,
 
-0 0 130px blue;
+0 0 100px #315cff;
 
 
-transition:4s;
+cursor:pointer;
+
+
+transition:
+
+3s;
 
 
 }
+
 
 
 
@@ -291,9 +208,9 @@ transition:4s;
 position:absolute;
 
 
-width:310px;
+width:280px;
 
-height:80px;
+height:70px;
 
 
 border:
@@ -304,9 +221,9 @@ border:
 border-radius:50%;
 
 
-left:-60px;
-
 top:55px;
+
+left:-50px;
 
 
 transform:
@@ -320,131 +237,112 @@ rotate(-20deg);
 
 
 
-
-/* حالت سفر */
-
-
-.space.travel .planet{
+/* کهکشان */
 
 
-opacity:0;
+.galaxy{
+
+
+position:absolute;
+
+
+width:600px;
+
+height:600px;
+
+
+left:50%;
+
+top:50%;
 
 
 transform:
 
 translate(-50%,-50%)
-scale(.1);
 
-
-}
-
-
-
-
-.space.travel .intro{
-
-
-opacity:0;
-
-
-transition:2s;
-
-}
-
-
-
-
-
-#mission{
-
-
-position:absolute;
-
-
-bottom:15%;
-
-
-width:100%;
-
-
-text-align:center;
-
-
-font-size:25px;
-
-
-opacity:0;
-
-
-transition:2s;
-
-
-}
-
-
-
-.space.travel #mission{
-
-opacity:1;
-
-}
-
-
-
-
-
-
-/* ستاره های مخفی */
-
-.hidden-star{
-
-
-position:absolute;
-
-
-width:18px;
-
-height:18px;
-
-
-background:white;
+scale(0);
 
 
 border-radius:50%;
 
 
-cursor:pointer;
+background:
 
 
-box-shadow:
+conic-gradient(
 
-0 0 30px cyan;
+transparent,
+
+#7b5cff,
+
+transparent,
+
+#00d9ff,
+
+transparent
+
+);
 
 
-animation:
+filter:
 
-pulse 1.5s infinite alternate;
+blur(20px);
+
+
+transition:
+
+5s;
 
 
 }
 
 
 
-@keyframes pulse{
 
-from{
 
-scale:.7;
+.space.active .galaxy{
+
+
+transform:
+
+translate(-50%,-50%)
+
+scale(1);
+
+
+}
+
+
+
+
+
+.space.active .planet{
+
+
+transform:
+
+translate(-50%,-50%)
+
+scale(.2);
+
+opacity:0;
+
 
 }
 
-to{
 
-scale:1.4;
+
+
+
+.space.active .intro{
+
+
+opacity:0;
+
 
 }
 
-}
+
 
 
 
@@ -461,14 +359,13 @@ position:absolute;
 
 left:50%;
 
-
 top:50%;
-
 
 
 transform:
 
 translate(-50%,-50%)
+
 scale(.2);
 
 
@@ -476,17 +373,19 @@ scale(.2);
 opacity:0;
 
 
-
 text-align:center;
 
 
-transition:4s;
+transition:
+
+4s;
 
 
 z-index:20;
 
 
 }
+
 
 
 
@@ -499,6 +398,7 @@ opacity:1;
 transform:
 
 translate(-50%,-50%)
+
 scale(1);
 
 
@@ -506,37 +406,18 @@ scale(1);
 
 
 
-
-
 .final h2{
 
 
-font-size:65px;
+font-size:80px;
 
 
 text-shadow:
 
 
-0 0 30px cyan,
+0 0 20px cyan,
 
 0 0 70px white;
-
-
-}
-
-
-
-.final h3{
-
-
-font-size:100px;
-
-margin:0;
-
-
-text-shadow:
-
-0 0 40px white;
 
 
 }
@@ -566,15 +447,9 @@ height:120px;
 
 .final h2{
 
-font-size:35px;
+font-size:40px;
 
 }
 
-
-.final h3{
-
-font-size:55px;
-
-}
 
 }
